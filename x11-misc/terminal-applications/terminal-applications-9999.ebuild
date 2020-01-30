@@ -32,7 +32,6 @@ src_install() {
 }
 
 pkg_postinst() {
-	elog "You may add ${PN} to default runlevel with:"
-	elog "rc-update add ${PN} default"
+	elog "TERMCMD variable can be changed in /etc/conf.d/${PN}"
 }
 
