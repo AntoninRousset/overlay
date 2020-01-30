@@ -32,7 +32,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	elog "Add service at boot with:"
+	elog "You may add ${PN} to default runlevel with:"
 	elog "rc-update add ${PN} default"
 }
 
