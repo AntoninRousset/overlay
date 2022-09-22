@@ -1,0 +1,92 @@
+# Copyright 1999-2022 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{8..11} )
+
+inherit distutils-r1
+
+if [[ ${PV} == *9999 ]]; then
+    inherit git-r3
+    EGIT_REPO_URI="https://github.com/LibrePhotos/librephotos.git"
+else
+    SRC_URI="
+		https://github.com/LibrePhotos/librephotos/archive/${PV}.tar.gz
+			-> {P}.tar.gz
+	"
+fi
+
+DESCRIPTION="A self-hosted open source photo management service"
+HOMEPAGE="
+	https://librephotos.com/
+	https://github.com/LibrePhotos/librephotos
+"
+
+LICENSE="MIT"
+SLOT="0"
+
+KEYWORDS="amd64 ~x86"
+IUSE=""
+
+RDEPEND="
+	acct-user/librephotos
+	>=dev-db/postgresql-13
+	>=dev-db/redis-6
+	>=dev-python/django-3.1.14[${PYTHON_USEDEP}]
+	<dev-python/django-4[${PYTHON_USEDEP}]
+	>=dev-python/django-cachalot-2.5.2[${PYTHON_USEDEP}]
+	>=dev-python/django-constance-2.7.0[${PYTHON_USEDEP}]
+	>=dev-python/django-chunked-upload-2.0.0[${PYTHON_USEDEP}]
+	>=dev-python/django-cors-headers-3.5.0[${PYTHON_USEDEP}]
+	>=dev-python/django-cryptography-1.0[${PYTHON_USEDEP}]
+	>=dev-python/django-extensions-3.0.9[${PYTHON_USEDEP}]
+	>=dev-python/django-filter-2.0.0[${PYTHON_USEDEP}]
+	>=dev-python/django-picklefield-3.0.1[${PYTHON_USEDEP}]
+	>=dev-python/django-redis-4.12.1[${PYTHON_USEDEP}]
+	>=dev-python/django-rq-2.5.1[${PYTHON_USEDEP}]
+	dev-python/django-bulk-update[${PYTHON_USEDEP}]
+	>=dev-python/django-silk-4.2.0[${PYTHON_USEDEP}]
+	>=dev-python/djangorestframework-3.12.4[${PYTHON_USEDEP}]
+	>=dev-python/djangorestframework-simplejwt-4.6.0[${PYTHON_USEDEP}]
+	>=dev-python/drf-extensions-0.7.0[${PYTHON_USEDEP}]
+	>=dev-python/drf-spectacular-0.7.0[${PYTHON_USEDEP}]
+	>=dev-python/face-recognition-0.21.2[${PYTHON_USEDEP}]
+	>=dev-python/flask-1.7.2[${PYTHON_USEDEP}]
+	>=dev-python/flask-cors-3.0.9[${PYTHON_USEDEP}]
+	>=dev-python/flask-cors-3.0.9[${PYTHON_USEDEP}]
+	>=dev-python/flask-restful-0.3.9[${PYTHON_USEDEP}]
+	>=dev-python/hdbscan-0.8.28[${PYTHON_USEDEP}]
+	>=dev-python/matplotlib-3.3.2[${PYTHON_USEDEP}]
+	>=dev-python/networkx-2.6.3[${PYTHON_USEDEP}]
+	>=dev-python/nltk-3.6.7[${PYTHON_USEDEP}]
+	>=dev-python/markupsafe-2.0.1[${PYTHON_USEDEP}]
+	>=dev-python/pillow-9.0.1[${PYTHON_USEDEP}]
+	>=dev-python/psycopg-2.8.6[${PYTHON_USEDEP}]
+	>=dev-python/pycocotools-2.0.2[${PYTHON_USEDEP}]
+	>=dev-python/pyocclient-0.6[${PYTHON_USEDEP}]
+	>=dev-python/pytz-2020.1[${PYTHON_USEDEP}]
+	>=dev-python/PyExifTool-0.4.9[${PYTHON_USEDEP}]
+	>=dev-python/pyjwt-2.4.0[${PYTHON_USEDEP}]
+	>=dev-python/pyvips-2.2.1[${PYTHON_USEDEP}]
+	>=dev-python/rq-1.10.1[${PYTHON_USEDEP}]
+	>=dev-python/seaborn-0.11.0[${PYTHON_USEDEP}]
+	>=dev-python/sentence-transformers-1.2.0[${PYTHON_USEDEP}]
+	>=dev-python/tqdm-4.64.0[${PYTHON_USEDEP}]
+	>=dev-python/gevent-5.2.0[${PYTHON_USEDEP}]
+	>=dev-python/python-magic-0.4.27[${PYTHON_USEDEP}]
+	>=dev-python/wand-0.6.6[${PYTHON_USEDEP}]
+	>=sci-geosciences/geopy-2.1.0[${PYTHON_USEDEP}]
+	>=sci-libs/faiss-1.7.2[python,${PYTHON_USEDEP}]
+	>=www-servers/gunicorn-20.1.0[${PYTHON_USEDEP}]
+"
+
+python_install() {
+	insinto /var/lib/librephotos
+	cp -r . "${ED}/var/lib/librephotos/backend"
+}
+
+python_compile() {
+	:
+}
